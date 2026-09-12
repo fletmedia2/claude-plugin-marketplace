@@ -1,0 +1,111 @@
+{
+  "name": "claude-plugin-marketplace",
+  "displayName": "Claude Code Marketplace",
+  "description": "Browse, add, and install Claude Code plugins and skills from marketplaces, right inside VS Code.",
+  "version": "0.0.1",
+  "publisher": "local-dev",
+  "private": true,
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "claudeMarketplace",
+          "title": "Claude Marketplace",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "claudeMarketplace": [
+        {
+          "id": "claudeMarketplace.installed",
+          "name": "Installed",
+          "type": "tree"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "claudeMarketplace.installed",
+        "contents": "No installed plugins detected.\n[Open Marketplace](command:claudeMarketplace.open)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "claudeMarketplace.open",
+        "title": "Claude Marketplace: Open Marketplace",
+        "icon": "$(extensions-view-icon)"
+      },
+      {
+        "command": "claudeMarketplace.createAgent",
+        "title": "Claude Marketplace: Create New Agent",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "claudeMarketplace.refresh",
+        "title": "Claude Marketplace: Refresh Installed List",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "claudeMarketplace.autoTune",
+        "title": "Claude Marketplace: Re-check Auto-Tune Now",
+        "icon": "$(wand)"
+      },
+      {
+        "command": "claudeMarketplace.uninstallPlugin",
+        "title": "Claude Marketplace: Uninstall Plugin",
+        "icon": "$(trash)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "claudeMarketplace.open",
+          "when": "view == claudeMarketplace.installed",
+          "group": "navigation"
+        },
+        {
+          "command": "claudeMarketplace.createAgent",
+          "when": "view == claudeMarketplace.installed",
+          "group": "navigation"
+        },
+        {
+          "command": "claudeMarketplace.refresh",
+          "when": "view == claudeMarketplace.installed",
+          "group": "navigation"
+        },
+        {
+          "command": "claudeMarketplace.autoTune",
+          "when": "view == claudeMarketplace.installed",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "claudeMarketplace.uninstallPlugin",
+          "when": "view == claudeMarketplace.installed && viewItem == installedPlugin"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.js --production",
+    "watch": "node esbuild.js --watch",
+    "compile": "tsc -p . --noEmit",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.0"
+  }
+}

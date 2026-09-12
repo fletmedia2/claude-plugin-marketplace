@@ -4,6 +4,7 @@
   "description": "Browse, add, and install Claude Code plugins and skills from marketplaces, right inside VS Code.",
   "version": "0.0.1",
   "publisher": "local-dev",
+  "author": "Flet Media",
   "private": true,
   "engines": {
     "vscode": "^1.90.0"
